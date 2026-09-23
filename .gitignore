@@ -1,0 +1,8 @@
+.DS_Store
+/testoutput
+*.exe
+*.test
+/vendor
+coverage.out
+/testdata/l4_sample
+/testdata/l4_sample.zip
