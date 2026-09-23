@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"testing"
 
 	"github.com/mentatxx/go-zarr"
@@ -74,7 +75,11 @@ func TestCLIPrintsArray(t *testing.T) {
 	data.SetInt64(1, 2)
 	require.NoError(t, arr.Write(ctx, nil, data))
 
-	bin := filepath.Join(t.TempDir(), "zarr")
+	name := "zarr"
+	if runtime.GOOS == "windows" {
+		name += ".exe"
+	}
+	bin := filepath.Join(t.TempDir(), name)
 	cmd := exec.Command("go", "build", "-o", bin, "./cmd/zarr")
 	cmd.Dir = mustRepoRoot(t)
 	out, err := cmd.CombinedOutput()
