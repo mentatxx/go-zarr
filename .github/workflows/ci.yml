@@ -16,21 +16,21 @@ jobs:
     runs-on: ${{ matrix.os }}
     services:
       s3mock:
-        image: ${{ matrix.os == 'ubuntu-latest' && 'adobe/s3mock:3.11.0' || '' }}
+        image: ${{ matrix.os == 'ubuntu-latest' && 'adobe/s3mock:5.2.0' || '' }}
         ports:
           - 9090:9090
         env:
-          initialBuckets: zarr-test-bucket
+          COM_ADOBE_TESTING_S3MOCK_STORE_INITIAL_BUCKETS: zarr-test-bucket
     defaults:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: true
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
-          go-version: "1.24.x"
+          go-version: "1.27.x"
       - name: Test
         env:
           RUN_S3_TESTS: ${{ matrix.os == 'ubuntu-latest' && '1' || '' }}
@@ -41,29 +41,29 @@ jobs:
   python:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           submodules: true
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v7
         with:
-          go-version: "1.24.x"
-      - uses: actions/setup-python@v5
+          go-version: "1.27.x"
+      - uses: actions/setup-python@v7
         with:
-          python-version: "3.11"
-      - uses: astral-sh/setup-uv@v6
+          python-version: "3.14"
+      - uses: astral-sh/setup-uv@v10.0.1
       - name: Python interop
         run: |
-          uv venv
+          uv venv --python python3
           uv pip install zarr zstandard
           go test ./... -count=1
 
   cblosc:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
         with:
-          go-version: "1.24.x"
+          go-version: "1.27.x"
       - name: Install c-blosc
         run: sudo apt-get update && sudo apt-get install -y libblosc-dev pkg-config
       - name: Test with cblosc
