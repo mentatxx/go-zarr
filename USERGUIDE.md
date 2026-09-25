@@ -10,7 +10,7 @@ Go implementation of the [Zarr](https://zarr.dev/) specification (v2 and v3), po
 go get github.com/mentatxx/go-zarr
 ```
 
-Go 1.22+ is required.
+Go 1.26+ is required.
 
 ## Open an array or group
 

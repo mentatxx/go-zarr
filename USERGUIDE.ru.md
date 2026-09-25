@@ -8,7 +8,7 @@ English version: [USERGUIDE.md](USERGUIDE.md).
 
 ## Установка
 
-Нужен Go 1.27 или новее, как в `go.mod`.
+Нужен Go 1.26 или новее, как в `go.mod`.
 
 ```bash
 go get github.com/mentatxx/go-zarr
